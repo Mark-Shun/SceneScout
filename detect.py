@@ -20,33 +20,37 @@ def detect_scenes(file_path, DetectorType = AdaptiveDetector()):
     scene_list = detect(file_path, DetectorType, show_progress=True)
     return scene_list
 
-def file_handler(file_path, directory_path):
+def file_handler(file_path, main_directory_path):
     global original_file_name
-    if(is_video_file(file_path)):
+    if(is_full_path(file_path)):
+        original_file_name = os.path.basename(file_path)
+        file_name = os.path.splitext(original_file_name)[0]
+
+        directory_path = os.path.dirname(file_path)
+        folder_name = f"[Scenes] {file_name}"
+        folder_path = os.path.join(directory_path, folder_name)
+
+        if(not(os.path.exists(folder_path))):
+            os.makedirs(folder_path)            
+        return folder_path
+
+    elif(is_video_file(file_path)):
         original_file_name = os.path.basename(file_path)
         file_name = os.path.splitext(original_file_name)[0]
 
         folder_name = f"[Scenes] {file_name}"
-        folder_path = os.path.join(directory_path, folder_name)
+        folder_path = os.path.join(main_directory_path, folder_name)
         
         if(not(os.path.exists(folder_path))):
             os.makedirs(folder_path)            
         return folder_path
-    elif(is_full_path(file_path)):
-        original_file_name = os.path.basename(file_path)
-        file_name = os.path.splitext(original_file_name)[0]
 
-        folder_name = f"[Scenes] {file_name}"
-        folder_path = os.path.join(directory_path, folder_name)
-        if(not(os.path.exists(folder_path))):
-            os.makedirs(folder_path)            
-        return folder_path
     else:
         print(f"File handling error: {file_path}")
         print("Aborting...")
         sys.exit(1)
 
-def store_pictures(file_path, directory_path, scene_list, directory_option=False):
+def store_pictures(file_path, main_directory_path, scene_list, directory_option=False):
     global original_file_name
 
     # Setting up path to output directory
@@ -56,11 +60,11 @@ def store_pictures(file_path, directory_path, scene_list, directory_option=False
         file_name = os.path.splitext(original_file_name)[0]
 
         folder_name = f"[Scenes] {file_name}"
-        folder_path = os.path.join(directory_path, folder_name)
+        folder_path = os.path.join(main_directory_path, folder_name)
         if(not(os.path.exists(folder_path))):
             os.makedirs(folder_path)
     else:
-        folder_path = file_handler(file_path, directory_path)
+        folder_path = file_handler(file_path, main_directory_path)
 
     print(f"Storing {len(scene_list)} frames from {file_path}, inside {folder_path}")
 
