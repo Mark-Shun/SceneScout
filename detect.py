@@ -21,7 +21,7 @@ def detect_scenes(file_path, DetectorType = None):
         DetectorType = AdaptiveDetector()
     
     # Detecting the different scenes
-    scene_list = detect(file_path, AdaptiveDetector(), show_progress=True)
+    scene_list = detect(video_path=file_path, detector=AdaptiveDetector(), show_progress=True)
     return scene_list
 
 def file_handler(file_path, main_directory_path):
