@@ -15,9 +15,13 @@ resize_y = 0
 
 original_file_name = ""
 
-def detect_scenes(file_path, DetectorType = AdaptiveDetector()):
+def detect_scenes(file_path, DetectorType = None):
+    # Planning to change the detector type in the future
+    if DetectorType == None:
+        DetectorType = AdaptiveDetector()
+    
     # Detecting the different scenes
-    scene_list = detect(file_path, DetectorType, show_progress=True)
+    scene_list = detect(file_path, AdaptiveDetector(), show_progress=True)
     return scene_list
 
 def file_handler(file_path, main_directory_path):
