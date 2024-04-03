@@ -13,6 +13,7 @@ The interesting part is that you can parse different input material at once
 - A path to a video
 - A folder with video files (the script does not go deeper into the folders of the parsed folder, just the files in the root of the folder.)
 - Or a mixture of the inputs above
+- Dragging the file(s)/folder(s) into the script
 
   Due to this you are able to give the script lots of media to process and let it do its thing in the background while you can do something else.
 
@@ -48,7 +49,7 @@ python main.py video.mp4 "c:/path/to/video/video.mkv" "c:/path/to/folder/with/vi
 - Looking into detection optimization (if possible)
 
 ## Current limitations
-- Folders get inspected one level deep (though perhaps you might not want it to endlessly process unintended videos deeped in the folder structure)
+- Folders get inspected one level deep (though perhaps you might not want it to endlessly process unintended videos deeper into the folder structure)
 - The resizing of the image is not done gracefully (currently anything above 720p gets downscaled to 720p, not necesarilly respecting the original aspect ratio currently)
 - Text on the pictures can misallign depending on the resolution of the input video
 - Very long file names won't fit burned on the image
