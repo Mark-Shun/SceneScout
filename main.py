@@ -20,36 +20,36 @@ def main(arguments):
             if(is_video_file(argument)):
                 # A full path to the video has been parsed
                 if(is_full_path(argument)):
-                    print(f"Scouting {argument}")
+                    print(f"\nScouting {argument}")
                     scene_list = detect_scenes(argument)
                     if(len(scene_list) > 0):
                         store_pictures(argument, current_path, scene_list)
                     else:
-                        print(f"WARNING: no scenes detected in {argument}")
+                        print(f"\nWARNING: no scenes detected in {argument}")
                 # Just the video title has been parsed
                 else:
-                    print(f"Scouting {argument}")
+                    print(f"\nScouting {argument}")
                     scene_list = detect_scenes(os.path.join(current_path, argument))
                     if(len(scene_list) > 0):
                         store_pictures(os.path.join(current_path, argument), current_path, scene_list)
                     else:
-                        print(f"WARNING: no scenes detected in {argument}")
+                        print(f"\nWARNING: no scenes detected in {argument}")
             # Argument is a folder
             elif(is_folder(argument)):
                 for file in os.listdir(argument):
                     file_path = os.path.join(argument, file)
                     # Check if file in the folder is a video file
                     if(is_video_file(file)):
-                        print(f"Scouting {file}")
+                        print(f"\nScouting {file}")
                         scene_list = detect_scenes(file_path)
                         if(len(scene_list) > 0):
                             store_pictures(file_path, argument, scene_list, directory_option=True)
                         else:
-                            print(f"WARNING: no scenes detected in {file_path}")
+                            print(f"\nWARNING: no scenes detected in {file_path}")
             else:
-                print(f"ERROR: could not handle argument: {argument}")
+                print(f"\nERROR: could not handle argument: {argument}")
 
 if __name__ == '__main__':
-    # Exclude file name from argument list
+    # Exclude the very first argument (the name of the script)
     arguments = sys.argv[1:]
     main(arguments)
