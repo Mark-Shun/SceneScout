@@ -16,6 +16,8 @@ The interesting part is that you can parse different input material at once
 
   Due to this you are able to give the script lots of media to process and let it do its thing in the background while you can do something else.
 
+![Processing one video file](./doc/media/process.gif)
+
 ## Setup
 ### Prerequisites
 - [Python](https://www.python.org/)
@@ -34,6 +36,7 @@ cd SceneScout
 pip install -r requirements.txt
 ```
 
+## Using the script
 Now you can use the script by directly drag and dropping the file(s)/folder(s) into the main.py file in your file explorer.
 Or you can enter the argument(s) manually in your command shell, for example:
 ```bash
