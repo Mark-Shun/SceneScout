@@ -28,13 +28,13 @@ def main(arguments):
                     if(os.path.exists(output_folder_path)):
                         print(f"\nNOTE: Scenes folder for \"{argument}\" already exists, skipping this file.")
                         continue
-                    print(f"\nScouting {argument}")
+                    print(f"\nScouting \"{argument}\"")
                     scenes_list = detect_scenes(argument)
                     if(len(scenes_list) > 0):
                         os.makedirs(output_folder_path)
                         store_pictures(output_folder_path, file_path, file_name, scenes_list)
                     else:
-                        print(f"\nWARNING: no scenes detected in {argument}")
+                        print(f"\nWARNING: no scenes detected in \"{argument}\"")
 
                 # Just the video title has been parsed
                 else:
@@ -43,13 +43,13 @@ def main(arguments):
                     if(os.path.exists(output_folder_path)):
                         print(f"\nNOTE: Scenes folder for \"{argument}\" already exists, skipping this file.")
                         continue
-                    print(f"\nScouting {argument}")
+                    print(f"\nScouting \"{argument}\"")
                     scenes_list = detect_scenes(file_path)
                     if(len(scenes_list) > 0):
                         os.makedirs(output_folder_path)
                         store_pictures(output_folder_path, file_path, file_name, scenes_list)
                     else:
-                        print(f"\nWARNING: no scenes detected in {argument}")
+                        print(f"\nWARNING: no scenes detected in \"{argument}\"")
 
             # Argument is a folder
             elif(is_folder(argument)):
@@ -61,13 +61,13 @@ def main(arguments):
                         if(os.path.exists(output_folder_path)):
                             print(f"\nNOTE: Scenes folder for \"{file_path}\" already exists, skipping this file.")
                             continue
-                        print(f"\nScouting {file}")
+                        print(f"\nScouting \"{file}\"")
                         scenes_list = detect_scenes(file_path)
                         if(len(scenes_list) > 0):
                             os.makedirs(output_folder_path)
                             store_pictures(output_folder_path, file_path, file_name, scenes_list)
                         else:
-                            print(f"\nWARNING: no scenes detected in {file_path}")
+                            print(f"\nWARNING: no scenes detected in \"{file_path}\"")
             else:
                 print(f"\nERROR: could not handle argument: {argument}")
 
@@ -76,7 +76,7 @@ def main(arguments):
         elapsed_time = end_time - start_time
         formatted_time = format_time(elapsed_time)
 
-        print("\n\nDone!")
+        print("\nDone!")
         print(f"Processing took: {formatted_time}")
         input("Press any key to exit...")
 

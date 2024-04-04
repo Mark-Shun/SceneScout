@@ -26,7 +26,7 @@ def detect_scenes(file_path, DetectorType = None):
 
 def store_pictures(output_folder_path, file_path, file_name, scenes_list, directory_option=False):
 
-    print(f"Storing {len(scenes_list)} frames from {file_name}, inside {output_folder_path}")
+    print(f"Storing {len(scenes_list)} frames from \"{file_name}\", inside \"{output_folder_path}\"")
 
     # Setting up text variables
     cap = VideoCapture(file_path)
@@ -96,5 +96,6 @@ def store_pictures(output_folder_path, file_path, file_name, scenes_list, direct
 
         imwrite(file_path, frame, [IMWRITE_JPEG_QUALITY, 50])
         index+=1
+    print("\n")
     
     cap.release()
