@@ -16,7 +16,7 @@ resize_y = 0
 original_file_name = ""
 
 def detect_scenes(file_path, DetectorType = None):
-    # Planning to change the detector type in the future
+    # Planning to change the detector type through argument flags
     if DetectorType == None:
         DetectorType = AdaptiveDetector()
     
@@ -31,7 +31,7 @@ def file_handler(file_path, main_directory_path):
         file_name = os.path.splitext(original_file_name)[0]
 
         directory_path = os.path.dirname(file_path)
-        folder_name = f"[Scenes] {file_name}"
+        folder_name = f"{file_name} [Scenes]"
         folder_path = os.path.join(directory_path, folder_name)
 
         if(not(os.path.exists(folder_path))):
@@ -42,7 +42,7 @@ def file_handler(file_path, main_directory_path):
         original_file_name = os.path.basename(file_path)
         file_name = os.path.splitext(original_file_name)[0]
 
-        folder_name = f"[Scenes] {file_name}"
+        folder_name = f"{file_name} [Scenes]"
         folder_path = os.path.join(main_directory_path, folder_name)
         
         if(not(os.path.exists(folder_path))):
@@ -63,7 +63,7 @@ def store_pictures(file_path, main_directory_path, scene_list, directory_option=
         original_file_name = os.path.basename(file_path)
         file_name = os.path.splitext(original_file_name)[0]
 
-        folder_name = f"[Scenes] {file_name}"
+        folder_name = f"{file_name} [Scenes]"
         folder_path = os.path.join(main_directory_path, folder_name)
         if(not(os.path.exists(folder_path))):
             os.makedirs(folder_path)
