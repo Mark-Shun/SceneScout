@@ -24,7 +24,7 @@ def main(arguments):
                     output_folder_path, file_name = get_path_details(argument, current_path)
                     file_path = argument
                     if(os.path.exists(output_folder_path)):
-                        print(f"\nNOTE: Scenes folder already exists, skipping: {argument}")
+                        print(f"\nNOTE: Scenes folder for \"{argument}\" already exists, skipping this file.")
                         continue
                     print(f"\nScouting {argument}")
                     scenes_list = detect_scenes(argument)
@@ -39,7 +39,7 @@ def main(arguments):
                     output_folder_path, file_name = get_path_details(argument, current_path)
                     file_path = os.path.join(current_path, argument)
                     if(os.path.exists(output_folder_path)):
-                        print(f"\nNOTE: Scenes folder already exists, skipping: {argument}")
+                        print(f"\nNOTE: Scenes folder for \"{argument}\" already exists, skipping this file.")
                         continue
                     print(f"\nScouting {argument}")
                     scenes_list = detect_scenes(file_path)
@@ -57,7 +57,7 @@ def main(arguments):
                         file_path = os.path.join(argument, file)
                         output_folder_path, file_name = get_path_details(file_path, current_path)
                         if(os.path.exists(output_folder_path)):
-                            print(f"\nNOTE: Scenes folder already exists, skipping: {file_path}")
+                            print(f"\nNOTE: Scenes folder for \"{file_path}\" already exists, skipping this file.")
                             continue
                         print(f"\nScouting {file}")
                         scenes_list = detect_scenes(file_path)
