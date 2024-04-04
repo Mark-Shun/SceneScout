@@ -1,7 +1,8 @@
 import os
 import sys
+import time
 from detect import detect_scenes, store_pictures
-from utilities import is_video_file, is_folder, is_full_path, get_path_details
+from utilities import is_video_file, is_folder, is_full_path, get_path_details, format_time
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 
@@ -15,6 +16,7 @@ def main(arguments):
         print("python main.py <video file> <path to video file> <path to video file> <folder> <video file>")
         print("\nPlease keep in mind that processing lots of video files and/or video files with a big resolution can take a while.")
     else:
+        start_time = time.time()
         for argument in arguments:
             # Argument is a video
             if(is_video_file(argument)):
@@ -68,7 +70,14 @@ def main(arguments):
                             print(f"\nWARNING: no scenes detected in {file_path}")
             else:
                 print(f"\nERROR: could not handle argument: {argument}")
+
+        # End of for loop
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        formatted_time = format_time(elapsed_time)
+
         print("\n\nDone!")
+        print(f"Processing took: {formatted_time}")
         input("Press any key to exit...")
 
 if __name__ == '__main__':

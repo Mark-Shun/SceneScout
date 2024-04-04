@@ -52,3 +52,8 @@ def get_path_details(file_path, main_directory_path):
         print(f"Path handling error: {file_path}")
         print("Aborting...")
         sys.exit(1)
+
+def format_time(seconds):
+    hours, remainder = divmod(seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return f"{int(hours)} hours, {int(minutes)} minutes and {int(seconds)} seconds."
