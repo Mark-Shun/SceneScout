@@ -56,4 +56,7 @@ def get_path_details(file_path, main_directory_path):
 def format_time(seconds):
     hours, remainder = divmod(seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
-    return f"{int(hours)} hours, {int(minutes)} minutes and {int(seconds)} seconds."
+    hour_txt = "hour" if hours == 1 else "hours"
+    minute_txt = "minute" if minutes == 1 else "minutes"
+    second_txt = "second" if seconds == 1 else "seconds"
+    return f"{int(hours)} {hour_txt}, {int(minutes)} {minute_txt} and {int(seconds)} {second_txt}."
