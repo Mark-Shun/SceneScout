@@ -45,11 +45,12 @@ python main.py video.mp4 "c:/path/to/video/video.mkv" "c:/path/to/folder/with/vi
 ```
 
 ## Planned features
-- Additional flags to set image quality, detector used for detecting the scenes, threshold.
-- Looking into detection optimization (if possible)
+- Configurable settings.ini file to adjust parameters like: detector type, skipping existing folders, threshold, etc
+- Looking into detection speed optimization (if possible)
 
 ## Current limitations
 - Folders get inspected one level deep (though perhaps you might not want it to endlessly process unintended videos deeper into the folder structure)
-- The resizing of the image is not done gracefully (currently anything above 720p gets downscaled to 720p, not necesarilly respecting the original aspect ratio currently)
+- The resizing of the image is not done gracefully (currently anything above 720p gets downscaled to 720p, not necesarilly respecting the original aspect ratio)
 - Text on the pictures can misallign depending on the resolution of the input video
 - Very long file names won't fit burned on the image
+- Illegal characters in a file name (\,/,:,*,?,",<,>,|), don't get handled properly. Seemingly processing but not saving the frames on at least Windows.
