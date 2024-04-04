@@ -21,7 +21,7 @@ The interesting part is that you can parse different input material at once
 
 ## Setup
 ### Prerequisites
-- [Python](https://www.python.org/)
+- [Python](https://www.python.org/) (Minimum version required = Python3.7)
 - [scenedetect](https://www.scenedetect.com/) (can get it through pip)
 - [opencv](https://opencv.org/) (more specifically opencv-python)
 
