@@ -21,60 +21,16 @@ def detect_scenes(file_path, DetectorType = None):
         DetectorType = AdaptiveDetector()
     
     # Detecting the different scenes
-    scene_list = detect(video_path=file_path, detector=AdaptiveDetector(), show_progress=True)
-    return scene_list
+    scenes_list = detect(video_path=file_path, detector=AdaptiveDetector(), show_progress=True)
+    return scenes_list
 
-def file_handler(file_path, main_directory_path):
-    global original_file_name
-    if(is_full_path(file_path)):
-        original_file_name = os.path.basename(file_path)
-        file_name = os.path.splitext(original_file_name)[0]
+def store_pictures(output_folder_path, file_path, file_name, scenes_list, directory_option=False):
 
-        directory_path = os.path.dirname(file_path)
-        folder_name = f"{file_name} [Scenes]"
-        folder_path = os.path.join(directory_path, folder_name)
-
-        if(not(os.path.exists(folder_path))):
-            os.makedirs(folder_path)            
-        return folder_path
-
-    elif(is_video_file(file_path)):
-        original_file_name = os.path.basename(file_path)
-        file_name = os.path.splitext(original_file_name)[0]
-
-        folder_name = f"{file_name} [Scenes]"
-        folder_path = os.path.join(main_directory_path, folder_name)
-        
-        if(not(os.path.exists(folder_path))):
-            os.makedirs(folder_path)            
-        return folder_path
-
-    else:
-        print(f"File handling error: {file_path}")
-        print("Aborting...")
-        sys.exit(1)
-
-def store_pictures(file_path, main_directory_path, scene_list, directory_option=False):
-    global original_file_name
-
-    # Setting up path to output directory
-    folder_path = ""
-    if(directory_option):
-        original_file_name = os.path.basename(file_path)
-        file_name = os.path.splitext(original_file_name)[0]
-
-        folder_name = f"{file_name} [Scenes]"
-        folder_path = os.path.join(main_directory_path, folder_name)
-        if(not(os.path.exists(folder_path))):
-            os.makedirs(folder_path)
-    else:
-        folder_path = file_handler(file_path, main_directory_path)
-
-    print(f"Storing {len(scene_list)} frames from {file_path}, inside {folder_path}")
+    print(f"Storing {len(scenes_list)} frames from {file_name}, inside {output_folder_path}")
 
     # Setting up text variables
     cap = VideoCapture(file_path)
-    cap.set(CAP_PROP_POS_FRAMES, scene_list[0][0].frame_num)
+    cap.set(CAP_PROP_POS_FRAMES, scenes_list[0][0].frame_num)
     ret, frame = cap.read()
     y,x = frame.shape[:2]
 
@@ -96,7 +52,7 @@ def store_pictures(file_path, main_directory_path, scene_list, directory_option=
         else:
             resize_check = False
     
-    # Text setup
+    # Burned text setup
     if(y == 720):
         tY = y-30
         tX = (x/3) - 40
@@ -114,14 +70,15 @@ def store_pictures(file_path, main_directory_path, scene_list, directory_option=
         timeFontScale = 1.5
         thickness_mult = 1
 
-
     index = 1
-    length = len(scene_list)
-    for scene in scene_list:
+    length = len(scenes_list)
+
+    # Storing frames
+    for scene in scenes_list:
         progress = index / length
         progress_bar(progress)
-        file_name = f"{scene[0].frame_num}.jpg"
-        file_path = os.path.join(folder_path, file_name)
+        frame_number = f"{scene[0].frame_num}.jpg"
+        file_path = os.path.join(output_folder_path, frame_number)
         cap.set(CAP_PROP_POS_FRAMES, scene[0].frame_num)
         ret, frame = cap.read()
 
@@ -130,12 +87,13 @@ def store_pictures(file_path, main_directory_path, scene_list, directory_option=
             y,x = frame.shape[:2]
 
         # Burn original file name into frame
-        putText(img=frame, text=str(original_file_name), org=file_point, fontFace=FONT_HERSHEY_SIMPLEX, fontScale=fileFontScale, color=(0,0,0), thickness=4 * thickness_mult, lineType=LINE_AA)
-        putText(img=frame, text=str(original_file_name), org=file_point, fontFace=FONT_HERSHEY_SIMPLEX, fontScale=fileFontScale, color=(255,255,255), thickness=2 * thickness_mult, lineType=LINE_AA)
+        putText(img=frame, text=str(file_name), org=file_point, fontFace=FONT_HERSHEY_SIMPLEX, fontScale=fileFontScale, color=(0,0,0), thickness=4 * thickness_mult, lineType=LINE_AA)
+        putText(img=frame, text=str(file_name), org=file_point, fontFace=FONT_HERSHEY_SIMPLEX, fontScale=fileFontScale, color=(255,255,255), thickness=2 * thickness_mult, lineType=LINE_AA)
 
         # Burn timecode into frame
         putText(img=frame, text=str(scene[0].get_timecode()), org=time_point, fontFace=FONT_HERSHEY_SIMPLEX, fontScale=timeFontScale, color=(0,0,0), thickness=4 * thickness_mult, lineType=LINE_AA)
         putText(img=frame, text=str(scene[0].get_timecode()), org=time_point, fontFace=FONT_HERSHEY_SIMPLEX, fontScale=timeFontScale, color=(255, 255, 255), thickness=2 * thickness_mult, lineType=LINE_AA)
+
         imwrite(file_path, frame, [IMWRITE_JPEG_QUALITY, 50])
         index+=1
     

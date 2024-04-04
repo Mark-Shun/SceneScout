@@ -1,7 +1,7 @@
 import os
 import sys
 from detect import detect_scenes, store_pictures
-from utilities import is_video_file, is_folder, is_full_path
+from utilities import is_video_file, is_folder, is_full_path, get_path_details
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 
@@ -18,32 +18,53 @@ def main(arguments):
         for argument in arguments:
             # Argument is a video
             if(is_video_file(argument)):
+
                 # A full path to the video has been parsed
                 if(is_full_path(argument)):
+                    output_folder_path, file_name = get_path_details(argument, current_path)
+                    print(f"output_folder_path: {output_folder_path}")
+                    file_path = argument
+                    if(os.path.exists(output_folder_path)):
+                        print(f"\nNOTE: Scenes folder already exists, skipping: {argument}")
+                        continue
                     print(f"\nScouting {argument}")
-                    scene_list = detect_scenes(argument)
-                    if(len(scene_list) > 0):
-                        store_pictures(argument, current_path, scene_list)
+                    scenes_list = detect_scenes(argument)
+                    if(len(scenes_list) > 0):
+                        os.makedirs(output_folder_path)
+                        store_pictures(output_folder_path, file_path, file_name, scenes_list)
                     else:
                         print(f"\nWARNING: no scenes detected in {argument}")
+
                 # Just the video title has been parsed
                 else:
+                    output_folder_path, file_name = get_path_details(argument, current_path)
+                    file_path = os.path.join(current_path, argument)
+                    if(os.path.exists(output_folder_path)):
+                        print(f"\nNOTE: Scenes folder already exists, skipping: {argument}")
+                        continue
                     print(f"\nScouting {argument}")
-                    scene_list = detect_scenes(os.path.join(current_path, argument))
-                    if(len(scene_list) > 0):
-                        store_pictures(os.path.join(current_path, argument), current_path, scene_list)
+                    scenes_list = detect_scenes(file_path)
+                    if(len(scenes_list) > 0):
+                        os.makedirs(output_folder_path)
+                        store_pictures(output_folder_path, file_path, file_name, scenes_list)
                     else:
                         print(f"\nWARNING: no scenes detected in {argument}")
+
             # Argument is a folder
             elif(is_folder(argument)):
                 for file in os.listdir(argument):
-                    file_path = os.path.join(argument, file)
-                    # Check if file in the folder is a video file
+                    # Check if file in the folder is actually a video file
                     if(is_video_file(file)):
+                        file_path = os.path.join(argument, file)
+                        output_folder_path, file_name = get_path_details(file_path, current_path)
+                        if(os.path.exists(output_folder_path)):
+                            print(f"\nNOTE: Scenes folder already exists, skipping: {file_path}")
+                            continue
                         print(f"\nScouting {file}")
-                        scene_list = detect_scenes(file_path)
-                        if(len(scene_list) > 0):
-                            store_pictures(file_path, argument, scene_list, directory_option=True)
+                        scenes_list = detect_scenes(file_path)
+                        if(len(scenes_list) > 0):
+                            os.makedirs(output_folder_path)
+                            store_pictures(output_folder_path, file_path, file_name, scenes_list)
                         else:
                             print(f"\nWARNING: no scenes detected in {file_path}")
             else:

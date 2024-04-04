@@ -29,3 +29,26 @@ def progress_bar(progress):
     text = "\r[{0}] {1:.0f}%".format("#" * block + "-" * (bar_length - block), progress * 100)
     sys.stdout.write(text)
     sys.stdout.flush()
+
+def get_path_details(file_path, main_directory_path):
+    if(is_full_path(file_path)):
+        original_file_name = os.path.basename(file_path)
+        file_name = os.path.splitext(original_file_name)[0]
+
+        directory_path = os.path.dirname(file_path)
+        folder_name = f"{file_name} [Scenes]"
+        output_folder_path = os.path.join(directory_path, folder_name)
+
+        return output_folder_path, original_file_name
+    elif(is_video_file(file_path)):
+        original_file_name = os.path.basename(file_path)
+        file_name = os.path.splitext(original_file_name)[0]
+
+        folder_name = f"{file_name} [Scenes]"
+        output_folder_path = os.path.join(main_directory_path, folder_name)
+                  
+        return output_folder_path, original_file_name
+    else:
+        print(f"Path handling error: {file_path}")
+        print("Aborting...")
+        sys.exit(1)
