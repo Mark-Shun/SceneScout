@@ -36,7 +36,7 @@ def get_path_details(file_path, main_directory_path):
         file_name = os.path.splitext(original_file_name)[0]
 
         directory_path = os.path.dirname(file_path)
-        folder_name = f"{file_name} [Scenes]"
+        folder_name = f"[Scenes] {file_name}"
         output_folder_path = os.path.join(directory_path, folder_name)
 
         return output_folder_path, original_file_name
@@ -44,7 +44,7 @@ def get_path_details(file_path, main_directory_path):
         original_file_name = os.path.basename(file_path)
         file_name = os.path.splitext(original_file_name)[0]
 
-        folder_name = f"{file_name} [Scenes]"
+        folder_name = f"[Scenes] {file_name}"
         output_folder_path = os.path.join(main_directory_path, folder_name)
                   
         return output_folder_path, original_file_name
