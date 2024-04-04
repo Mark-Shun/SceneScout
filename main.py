@@ -68,6 +68,8 @@ def main(arguments):
                             print(f"\nWARNING: no scenes detected in {file_path}")
             else:
                 print(f"\nERROR: could not handle argument: {argument}")
+        print("\n\nDone!")
+        input("Press any key to exit...")
 
 if __name__ == '__main__':
     # Exclude the very first argument (the name of the script)
