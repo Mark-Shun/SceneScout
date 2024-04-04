@@ -22,7 +22,6 @@ def main(arguments):
                 # A full path to the video has been parsed
                 if(is_full_path(argument)):
                     output_folder_path, file_name = get_path_details(argument, current_path)
-                    print(f"output_folder_path: {output_folder_path}")
                     file_path = argument
                     if(os.path.exists(output_folder_path)):
                         print(f"\nNOTE: Scenes folder already exists, skipping: {argument}")
